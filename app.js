@@ -29,7 +29,8 @@ const app = express();
 	app.use((err,req,res,next) => {
 		res.locals.err = err;
 		res.status(err.status);
-		res.render('error',err);
+		//res.render('error',err);
+		res.send(err);
 	});
 
 //server

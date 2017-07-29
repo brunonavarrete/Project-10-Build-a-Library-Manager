@@ -1,0 +1,17 @@
+extends layout.pug
+block content
+	h1 Books
+	p
+		a(class='button' href='new_book') Add new book
+	table
+		thead
+			tr
+				th Title
+				th Author
+				th Genre
+				th First published
+		tbody
+			-for( var i = 0; i < books.length; i++){
+				tr
+					td=i
+			-}
