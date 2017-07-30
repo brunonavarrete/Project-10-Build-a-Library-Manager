@@ -1,24 +1,31 @@
 extends ../layout.pug
 block content
 	h1 New Loan
-	form
+	form(method='post' action='/loans/new')
+		-if(errors){
+			h2(class="error") Oooops!
+			ul(class="error")
+				-for( let i = 0; i < errors.length; i++ ){
+					li=errors[i].message
+				-}
+		-}
 		p
 			label(for='book_id') Book
-			select(id='book_id')
+			select(id='book_id' name='book_id')
 				-for( var i =  0; i < books.length; i++){
-					option(value="book_id")=books[i].title
+					option(value=books[i].id)=books[i].title
 				-}
 		p
 			label(for='patron_id') Patron
-			select(id='patron_id')
+			select(id='patron_id' name='patron_id')
 				-for( var i =  0; i < patrons.length; i++){
-					option(value="patron_id")=`${patrons[i].first_name} ${patrons[i].last_name}`
+					option(value=patrons[i].id)=`${patrons[i].first_name} ${patrons[i].last_name}`
 				-}
 		p
 			label(for='loaned_on') Loaned on:
-			input(id='loaned_on' type='text' value=`${new Date('%Y-%m-%d')}`)
+			input(id='loaned_on' name='loaned_on' type='text' value=`${today}`)
 		p
 			label(for='return_by') Return by:
-			input(id='return_by' type='text' value=`${new Date('%Y-%m-%d')}`)
+			input(id='return_by' name='return_by' type='text' value=`${tomorrow}`)
 		p
 			input(type='submit' value='Create new loan')

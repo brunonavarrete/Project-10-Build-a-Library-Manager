@@ -101,7 +101,7 @@ const Loan = require('../models').Loan;
 			} else {
 				console.error(error);
 			}
-		});;
+		});
 	});
 
 module.exports = router;

@@ -5,7 +5,14 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.INTEGER,
         primaryKey: true
     },
-    book_id: DataTypes.INTEGER,
+    book_id: {
+      type:DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: '"Book ID" is required'
+        }
+      }
+    },
     patron_id: {
       type:DataTypes.INTEGER,
       validate: {
@@ -15,22 +22,25 @@ module.exports = function(sequelize, DataTypes) {
       }
     },
     loaned_on: {
-      type:DataTypes.DATE,
+      type:DataTypes.DATEONLY,
       validate: {
         notEmpty: {
           msg: '"Loaned on" is required'
-        }
+        },
+        // isDate: {
+        //   msg: 'Correct format is YYYY-MM-DD'
+        // }
       }
     },
     return_by: {
-      type:DataTypes.DATE,
+      type:DataTypes.DATEONLY,
       validate: {
         notEmpty: {
           msg: '"Return by" is required'
         }
       }
     },
-    returned_on: DataTypes.DATE
+    returned_on: DataTypes.DATEONLY
   }, {
     timestamps:false,
     underscored:true

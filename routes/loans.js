@@ -4,6 +4,12 @@ const Book = require('../models').Book;
 const Patron = require('../models').Patron;
 const Loan = require('../models').Loan;
 
+const formatDate = function(date,tomorrow){
+	const month = (date.getMonth()+1 < 10) ? '0'+(date.getMonth()+1) : date.getMonth()+1;
+	const day = (tomorrow) ? (date.getDate()+1) : date.getDate();
+	return date.getFullYear() + '-' + month + '-' + day;
+}
+
 // relations
 	Loan.belongsTo(Patron);
 	Book.hasMany(Loan);
@@ -24,6 +30,8 @@ const Loan = require('../models').Loan;
 	router.get('/new', (req, res) => {
 		Book.findAll().then( (books) => {
 			Patron.findAll().then( (patrons) => {
+				res.locals.today = formatDate( new Date(),undefined );
+				res.locals.tomorrow = formatDate( new Date(),true );
 				res.render('loans/new',{books,patrons});
 			});
 		});
@@ -54,5 +62,24 @@ const Loan = require('../models').Loan;
 		}));
 	});
 
+// POST
+	router.post('/new', (req,res) => {
+		Loan.create(req.body).then((loan) => {
+			res.redirect('/loans');
+		}).catch((error) => {
+			if( error.name === 'SequelizeValidationError' ){
+				Book.findAll().then( (books) => {
+					Patron.findAll().then( (patrons) => {
+						res.locals.today = formatDate( new Date(),undefined );
+						res.locals.tomorrow = formatDate( new Date(),true );
+						res.locals.errors = error.errors;
+						res.render('loans/new',{books,patrons});
+					});
+				});
+			} else {
+				console.error(error);
+			}
+		});
+	});
 
 module.exports = router;
