@@ -16,24 +16,28 @@ block content
 			input(id='first_published' name='first_published' type='text' value=`${book.first_published}`)
 		p
 			input(type='submit' value='Create new book')
-	h2 Loan History
-	table
-		thead
-			tr
-				th Book
-				th Patron 
-				th Loaned on
-				th Return by 
-				th Returned on
-				th Action
-		tbody
-			tr
-				td 
-					a(href=`/books/${book.id}`) #{book.title}
-				td 
-					a(href=``) Andrew Chalkley
-				td 2015-12-12
-				td 2015-12-19
-				td
-				td
-					a(href='' class="button") Return Book
+	-if( book.Loans ){
+		h2 Loan History
+		table
+			thead
+				tr
+					th Book
+					th Patron 
+					th Loaned on
+					th Return by 
+					th Returned on
+					th Action
+			tbody
+				-for(let i = 0; i < book.Loans.length; i++){
+					tr
+						td 
+							a(href=`/loans/${book.Loans[i].id}`) #{book.title}
+						td 
+							a(href=``)=book.Loans[i].patron_id
+						td=book.Loans[i].loaned_on
+						td=book.Loans[i].return_by
+						td=book.Loans[i].returned_on
+						td
+							a(href='' class="button") Return Book
+				-}
+	-}

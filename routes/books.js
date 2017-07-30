@@ -6,7 +6,7 @@ const Loan = require('../models').Loan;
 
 // relations
 Loan.belongsTo(Book);
-
+Book.hasMany(Loan);
 	// books
 		// GET
 			router.get('', (req, res) => {
@@ -53,8 +53,10 @@ Loan.belongsTo(Book);
 					where: { 
 						id: req.params.id
 					},
+					include: [Loan]
 				}).then( (book) => {
 					res.render('book_detail',{book});
+					//res.send(book);
 				});
 			});
 
