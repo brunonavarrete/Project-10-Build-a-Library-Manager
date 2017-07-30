@@ -1,4 +1,4 @@
-extends layout.pug
+extends ../layout.pug
 block content
 	h1 New Loan
 	form
@@ -16,9 +16,9 @@ block content
 				-}
 		p
 			label(for='loaned_on') Loaned on:
-			input(id='loaned_on' type='text' value='Sun May 22 2016 17:00:00 GMT-0700 (PDT)')
+			input(id='loaned_on' type='text' value=`${new Date('%Y-%m-%d')}`)
 		p
 			label(for='return_by') Return by:
-			input(id='return_by' type='text' value='Sun May 22 2016 17:00:00 GMT-0700 (PDT)')
+			input(id='return_by' type='text' value=`${new Date('%Y-%m-%d')}`)
 		p
 			input(type='submit' value='Create new loan')

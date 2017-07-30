@@ -25,23 +25,4 @@ const Loan = require('../models').Loan;
 			res.render('new_patron');
 		});
 
-	//loans
-		router.get('/loans', (req, res) => {
-			res.redirect('/loans/all');
-		});
-		router.get('/loans/all', (req, res) => {
-			Loan.findAll().then( (loans) => {
-				res.locals.loans = loans;
-				res.render('all_loans',loans);
-			});
-		});
-
-		router.get('/loans/new', (req, res) => {
-			Book.findAll().then( (books) => {
-				Patron.findAll().then( (patrons) => {
-					res.render('new_loan',{books,patrons});
-				});
-			});
-		});
-
 module.exports = router;

@@ -1,0 +1,30 @@
+extends ../layout.pug
+block content
+	h1 Loans
+	p
+		a(class='button' href='/loans/new') Add new loan
+	include ../includes/loan_filters
+	table
+		thead
+			tr
+				th Book Title
+				th Patron
+				th Loaned on
+				th Return by
+				th Returned on
+				th Action
+		tbody
+			-for( var i = 0; i < loans.length; i++){
+				tr
+					td
+						a(href=`/books/${loans[i].Book.id}`)=loans[i].Book.title
+					td
+						a(href=`/patrons/${loans[i].Patron.id}`)=`${loans[i].Patron.first_name} ${loans[i].Patron.last_name}`
+					td=loans[i].loaned_on
+					td=loans[i].return_by
+					td=loans[i].returned_on
+					td
+						-if( !loans[i].returned_on ){
+							a(href=`/loans/${loans[i].id}` class="button") Return Book
+						-}
+			-}

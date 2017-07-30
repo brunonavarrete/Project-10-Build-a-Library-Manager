@@ -1,8 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const path = require('path');
-
 const app = express();
 
 // middleware
@@ -16,9 +14,11 @@ const app = express();
 // routes
 	const mainRoutes = require('./routes/index');
 	const bookRoutes = require('./routes/books');
+	const loanRoutes = require('./routes/loans');
 
 	app.use('/',mainRoutes);
 	app.use('/books',bookRoutes);
+	app.use('/loans',loanRoutes);
 
 // ERRORS
 	app.use((req,res,next) => {
