@@ -63,7 +63,7 @@ const formatDate = function(date,tomorrow){
 	});
 
 
-	router.get('/return/:id', (req, res) => {
+	router.get('/:id', (req, res) => {
 		Loan.findOne({
 			where: {
 				id: req.params.id
@@ -90,6 +90,30 @@ const formatDate = function(date,tomorrow){
 						res.render('loans/new',{books,patrons});
 					});
 				});
+			} else {
+				console.error(error);
+			}
+		});
+	});
+
+	router.post('/:id', (req, res) => {
+		Loan.findById(req.params.id).then((loan) => {
+			return loan.update(req.body);
+		}).then((loan) => {
+			res.redirect('/loans');
+		}).catch((error) => {
+			if( error.name === 'SequelizeValidationError' ){
+				Loan.findOne({
+					where: {
+						id: req.params.id
+					},
+					include: [Patron,Book]
+				}).then((loan => {
+					res.locals.today = formatDate( new Date(),undefined );
+					res.locals.errors = error.errors;
+					res.render('loans/return',{loan});
+					//res.send(loan);
+				}));
 			} else {
 				console.error(error);
 			}

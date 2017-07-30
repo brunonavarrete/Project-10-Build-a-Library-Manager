@@ -27,9 +27,6 @@ module.exports = function(sequelize, DataTypes) {
         notEmpty: {
           msg: '"Loaned on" is required'
         },
-        // isDate: {
-        //   msg: 'Correct format is YYYY-MM-DD'
-        // }
       }
     },
     return_by: {
@@ -40,7 +37,14 @@ module.exports = function(sequelize, DataTypes) {
         }
       }
     },
-    returned_on: DataTypes.DATEONLY
+    returned_on: {
+      type:DataTypes.DATEONLY,
+      validate: {
+        notEmpty: {
+          msg: '"Returned on" is required'
+        }
+      }
+    }
   }, {
     timestamps:false,
     underscored:true

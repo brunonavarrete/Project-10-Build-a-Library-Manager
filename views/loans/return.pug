@@ -9,7 +9,14 @@ block content
 		strong=`Loaned On: ${loan.loaned_on}`
 	p 
 		strong=`Return by: ${loan.return_by}`
-	form
+	form(action=`/loans/${loan.id}` method='post')
+		-if(errors){
+			h2(class="error") Oooops!
+			ul(class="error")
+				-for( let i = 0; i < errors.length; i++ ){
+					li=errors[i].message
+				-}
+		-}
 		p
 			label(for='returned_on') Returned on:
 			input(id='returned_on' name='returned_on' type='text' value=`${today}`)
