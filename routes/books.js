@@ -16,7 +16,7 @@ const Loan = require('../models').Loan;
 
 	router.get('/all', (req, res) => {
 		Book.findAll().then( (books) => {
-			res.render('books/all',{books});
+			res.render('books/list',{books,title:'Books'});
 		});
 	});
 
@@ -64,7 +64,7 @@ const Loan = require('../models').Loan;
 			res.render('books/detail',{book});
 		});
 	});
-
+	
 // POST
 	router.post('/new', (req, res) => {
 		Book.create(req.body).then((book) => {

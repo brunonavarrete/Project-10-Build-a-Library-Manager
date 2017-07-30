@@ -23,7 +23,7 @@ const formatDate = function(date,tomorrow){
 		Loan.findAll({
 			include: [Patron,Book]
 		}).then((loans) => {
-			res.render('loans/list',{loans});
+			res.render('loans/list',{loans,title:'Loans'});
 		});
 	});
 
@@ -47,7 +47,7 @@ const formatDate = function(date,tomorrow){
 			},
 			include: [Patron,Book]
 		}).then((loans => {
-			res.render('loans/list',{loans});
+			res.render('loans/list',{loans,title:'Overdue Loans'});
 		}));
 	});
 
@@ -58,7 +58,21 @@ const formatDate = function(date,tomorrow){
 			},
 			include: [Patron,Book]
 		}).then((loans => {
-			res.render('loans/list',{loans});
+			res.render('loans/list',{loans,title:'Checked Out Loans'});
+		}));
+	});
+
+
+	router.get('/return/:id', (req, res) => {
+		Loan.findOne({
+			where: {
+				id: req.params.id
+			},
+			include: [Patron,Book]
+		}).then((loan => {
+			res.locals.today = formatDate( new Date(),undefined );
+			res.render('loans/return',{loan});
+			//res.send(loan);
 		}));
 	});
 
