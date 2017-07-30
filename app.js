@@ -14,10 +14,10 @@ const app = express();
 
 // routes
 	const mainRoutes = require('./routes');
-	// const cardRoutes = require('./routes/cards');
+	const bookRoutes = require('./routes/books');
 
 	app.use(mainRoutes);
-	// app.use('/cards',cardRoutes);
+	app.use('/books',bookRoutes);
 
 // ERRORS
 	app.use((req,res,next) => {
@@ -30,7 +30,7 @@ const app = express();
 		res.locals.err = err;
 		res.status(err.status);
 		//res.render('error',err);
-		res.send(err);
+		res.send(err.status);
 	});
 
 //server

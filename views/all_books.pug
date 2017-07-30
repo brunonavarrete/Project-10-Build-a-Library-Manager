@@ -2,7 +2,8 @@ extends layout.pug
 block content
 	h1 Books
 	p
-		a(class='button' href='new_book') Add new book
+		a(class='button' href='/books/new') Add new book
+	include includes/book_filters
 	table
 		thead
 			tr
@@ -13,5 +14,9 @@ block content
 		tbody
 			-for( var i = 0; i < books.length; i++){
 				tr
-					td=i
+					td
+						a(href=`books/${books[i].id}`)=books[i].title
+					td=books[i].author
+					td=books[i].genre
+					td=books[i].first_published
 			-}
