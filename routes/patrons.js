@@ -12,12 +12,22 @@ const Loan = require('../models').Loan;
 	router.get('/all', (req, res) => {
 		Patron.findAll().then( (patrons) => {
 			res.locals.patrons = patrons;
-			res.render('patrons/all',patrons);
+			res.render('patrons/list',patrons);
 		});
 	});
 
 	router.get('/new', (req, res) => {
 		res.render('patrons/new');
+	});
+
+	router.get('/:id', (req, res) => {
+		Patron.findOne({
+			where: {
+				id: req.params.id
+			}
+		}).then((patron) => {
+			res.render('patrons/detail',{patron});
+		});
 	});
 
 module.exports = router;

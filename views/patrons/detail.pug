@@ -1,0 +1,24 @@
+extends ../layout.pug
+block content
+	h1=`Patron: ${patron.first_name} ${patron.last_name}`
+	form
+		p
+			label(for='first_name') First Name
+			input(id='first_name' name='first_name' value=`${patron.first_name}` type='text')
+		p
+			label(for='last_name') Last Name
+			input(id='last_name' name='last_name' value=`${patron.last_name}` type='text')
+		p
+			label(for='address') Address
+			input(id='address' name='address' value=`${patron.address}` type='text')
+		p
+			label(for='email') Email
+			input(id='email' name='email' value=`${patron.email}` type='text')
+		p
+			label(for='library_id') Library ID
+			input(id='library_id' name='library_id' value=`${patron.library_id}` type='text')
+		p
+			label(for='zip_code') Zip Code
+			input(id='zip_code' name='zip_code' value=`${patron.zip_code}` type='text')
+		p
+			input(type='submit' value='Update')
