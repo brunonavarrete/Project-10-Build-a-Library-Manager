@@ -15,10 +15,12 @@ const app = express();
 	const mainRoutes = require('./routes/index');
 	const bookRoutes = require('./routes/books');
 	const loanRoutes = require('./routes/loans');
+	const patronRoutes = require('./routes/patrons');
 
 	app.use('/',mainRoutes);
 	app.use('/books',bookRoutes);
 	app.use('/loans',loanRoutes);
+	app.use('/patrons',patronRoutes);
 
 // ERRORS
 	app.use((req,res,next) => {
