@@ -1,9 +1,9 @@
-extends layout.pug
+extends ../layout.pug
 block content
 	h1=title
 	p
 		a(class='button' href='/books/new') Add new book
-	include includes/book_filters
+	include ../includes/book_filters
 	table
 		thead
 			tr

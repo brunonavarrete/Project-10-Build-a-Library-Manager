@@ -8,20 +8,20 @@ const Loan = require('../models').Loan;
 	Loan.belongsTo(Book);
 	Book.hasMany(Loan);
 	Loan.belongsTo(Patron);
-	
+
 // GET
-	router.get('', (req, res) => {
+	router.get('/', (req, res) => {
 		res.redirect('/books/all');
 	});
 
 	router.get('/all', (req, res) => {
 		Book.findAll().then( (books) => {
-			res.render('all_books',{books});
+			res.render('books/all',{books});
 		});
 	});
 
 	router.get('/new', (req, res) => {
-		res.render('new_book');
+		res.render('books/new');
 	});
 
 	router.get('/checked', (req, res) => {
@@ -31,7 +31,7 @@ const Loan = require('../models').Loan;
 			},
 			include: [Book],
 		}).then( (loans) => {
-			res.render('overdue_books',{loans,title:'Checked Out Books'});
+			res.render('books/overdue',{loans,title:'Checked Out Books'});
 		});
 	});
 
@@ -45,7 +45,7 @@ const Loan = require('../models').Loan;
 			},
 			include: [Book],
 		}).then( (loans) => {
-			res.render('overdue_books',{loans,title:'Overdue Books'});
+			res.render('books/overdue',{loans,title:'Overdue Books'});
 		});
 	});
 
@@ -61,7 +61,7 @@ const Loan = require('../models').Loan;
 				}
 			]
 		}).then( (book) => {
-			res.render('book_detail',{book});
+			res.render('books/detail',{book});
 		});
 	});
 
@@ -71,7 +71,7 @@ const Loan = require('../models').Loan;
 			res.redirect('/books');
 		}).catch((error) => {
 			if( error.name === 'SequelizeValidationError' ){
-				res.render('new_book',{errors:error.errors});
+				res.render('books/new',{errors:error.errors});
 			} else {
 				console.error(error);
 			}
@@ -96,7 +96,7 @@ const Loan = require('../models').Loan;
 						}
 					]
 				}).then( (book) => {
-					res.render('book_detail',{book,errors:error.errors});
+					res.render('books/detail',{book,errors:error.errors});
 				});
 			} else {
 				console.error(error);

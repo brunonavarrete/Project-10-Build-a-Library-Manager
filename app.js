@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 const app = express();
 
@@ -9,14 +10,14 @@ const app = express();
 	app.use( cookieParser() );
 	app.use('/static', express.static(__dirname + '/public'));
 
-// pug
+// view engine setup
 	app.set('view engine', 'pug');
 
 // routes
-	const mainRoutes = require('./routes');
+	const mainRoutes = require('./routes/index');
 	const bookRoutes = require('./routes/books');
 
-	app.use(mainRoutes);
+	app.use('/',mainRoutes);
 	app.use('/books',bookRoutes);
 
 // ERRORS
@@ -27,10 +28,10 @@ const app = express();
 	});
 
 	app.use((err,req,res,next) => {
-		res.locals.err = err;
-		res.status(err.status);
+		// res.locals.err = err;
+		// res.status(err.status);
 		//res.render('error',err);
-		res.send(err);
+		res.send('<pre>'+err.message+'</pre>');
 	});
 
 //server
