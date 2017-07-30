@@ -50,7 +50,7 @@ const Loan = require('../models').Loan;
 	});
 
 	router.get('/:id', (req, res) => {
-		Book.find({
+		Book.findOne({
 			where: { 
 				id: req.params.id
 			},
@@ -78,4 +78,13 @@ const Loan = require('../models').Loan;
 			}
 		});
 	});
+
+	router.post('/:id', (req, res) => {
+		Book.findById(req.params.id).then((book) => {
+			return book.update(req.body);
+		}).then((book) => {
+			res.redirect(`/books/${book.id}`);
+		});
+	});
+
 module.exports = router;

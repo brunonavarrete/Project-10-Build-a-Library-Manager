@@ -1,7 +1,7 @@
 extends layout.pug
 block content
 	h1=book.title
-	form(method='post' action='/books/update')
+	form(action=`/books/${book.id}` method='post')
 		p
 			label(for='title') Title
 			input(id='title' name='title' type='text' value=`${book.title}`)
@@ -15,7 +15,7 @@ block content
 			label(for='first_published') First Published
 			input(id='first_published' name='first_published' type='text' value=`${book.first_published}`)
 		p
-			input(type='submit' value='Create new book')
+			input(type='submit' value='Update')
 	-if( book.Loans ){
 		h2 Loan History
 		table
