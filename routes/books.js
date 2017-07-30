@@ -62,14 +62,13 @@ const Loan = require('../models').Loan;
 			]
 		}).then( (book) => {
 			res.render('book_detail',{book});
-			//res.send(book);
 		});
 	});
 
 // POST
 	router.post('/new', (req, res) => {
 		Book.create(req.body).then((book) => {
-			res.redirect('/');
+			res.redirect('/books');
 		}).catch((error) => {
 			if( error.name === 'SequelizeValidationError' ){
 				res.render('new_book',{errors:error.errors});
@@ -84,7 +83,25 @@ const Loan = require('../models').Loan;
 			return book.update(req.body);
 		}).then((book) => {
 			res.redirect(`/books/${book.id}`);
-		});
+		}).catch((error) => {
+			if( error.name === 'SequelizeValidationError' ){
+				Book.findOne({
+					where: { 
+						id: req.params.id
+					},
+					include: [
+						{
+							model: Loan,
+							include: [Patron]
+						}
+					]
+				}).then( (book) => {
+					res.render('book_detail',{book,errors:error.errors});
+				});
+			} else {
+				console.error(error);
+			}
+		});;
 	});
 
 module.exports = router;

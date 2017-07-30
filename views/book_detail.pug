@@ -2,6 +2,13 @@ extends layout.pug
 block content
 	h1=book.title
 	form(action=`/books/${book.id}` method='post')
+		-if(errors){
+			h2(class="error") Oooops!
+			ul(class="error")
+				-for( let i = 0; i < errors.length; i++ ){
+					li=errors[i].message
+				-}
+		-}
 		p
 			label(for='title') Title
 			input(id='title' name='title' type='text' value=`${book.title}`)
@@ -31,13 +38,15 @@ block content
 				-for(let i = 0; i < book.Loans.length; i++){
 					tr
 						td 
-							a(href=`/loans/${book.Loans[i].id}`) #{book.title}
+							a(href=`/books/${book.id}`) #{book.title}
 						td 
 							a(href=`/patrons/${book.Loans[i].Patron.id}`)=`${book.Loans[i].Patron.first_name} ${book.Loans[i].Patron.last_name}`
 						td=book.Loans[i].loaned_on
 						td=book.Loans[i].return_by
 						td=book.Loans[i].returned_on
 						td
-							a(href=`/loans/${book.Loans[i].id}` class="button") Return Book
+							-if( !book.Loans[i].returned_on ){
+								a(href=`/loans/${book.Loans[i].id}` class="button") Return Book
+							-}
 				-}
 	-}
