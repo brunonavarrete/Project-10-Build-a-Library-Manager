@@ -33,11 +33,11 @@ block content
 						td 
 							a(href=`/loans/${book.Loans[i].id}`) #{book.title}
 						td 
-							a(href=``)=book.Loans[i].patron_id
+							a(href=`/patrons/${book.Loans[i].Patron.id}`)=`${book.Loans[i].Patron.first_name} ${book.Loans[i].Patron.last_name}`
 						td=book.Loans[i].loaned_on
 						td=book.Loans[i].return_by
 						td=book.Loans[i].returned_on
 						td
-							a(href='' class="button") Return Book
+							a(href=`/loans/${book.Loans[i].id}` class="button") Return Book
 				-}
 	-}
