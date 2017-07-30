@@ -1,0 +1,39 @@
+extends layout.pug
+block content
+	h1=book.title
+	form(method='post' action='/books/update')
+		p
+			label(for='title') Title
+			input(id='title' name='title' type='text' value=`${book.title}`)
+		p
+			label(for='author') Author
+			input(id='author' name='author' type='text' value=`${book.author}`)
+		p
+			label(for='genre') Genre
+			input(id='genre' name='genre' type='text' value=`${book.genre}`)
+		p
+			label(for='first_published') First Published
+			input(id='first_published' name='first_published' type='text' value=`${book.first_published}`)
+		p
+			input(type='submit' value='Create new book')
+	h2 Loan History
+	table
+		thead
+			tr
+				th Book
+				th Patron 
+				th Loaned on
+				th Return by 
+				th Returned on
+				th Action
+		tbody
+			tr
+				td 
+					a(href=`/books/${book.id}`) #{book.title}
+				td 
+					a(href=``) Andrew Chalkley
+				td 2015-12-12
+				td 2015-12-19
+				td
+				td
+					a(href='' class="button") Return Book

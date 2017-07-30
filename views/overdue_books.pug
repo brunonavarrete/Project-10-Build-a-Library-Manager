@@ -1,0 +1,22 @@
+extends layout.pug
+block content
+	h1=title
+	p
+		a(class='button' href='/books/new') Add new book
+	include includes/book_filters
+	table
+		thead
+			tr
+				th Title
+				th Author
+				th Genre
+				th First published
+		tbody
+			-for( var i = 0; i < loans.length; i++){
+				tr
+					td
+						a(href=`/books/${loans[i].Book.id}`)=loans[i].Book.title
+					td=loans[i].Book.author
+					td=loans[i].Book.genre
+					td=loans[i].Book.first_published
+			-}

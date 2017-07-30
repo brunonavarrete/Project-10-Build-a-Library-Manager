@@ -1,0 +1,23 @@
+extends layout.pug
+block content
+	h1 Loans
+	p
+		a(class='button' href='/loans/new') Add new loan
+	include includes/book_filters
+	table
+		thead
+			tr
+				th Book id
+				th Patron id
+				th Loaned on
+				th Return by
+				th Returned on
+		tbody
+			-for( var i = 0; i < loans.length; i++){
+				tr
+					td=loans[i].book_id
+					td=loans[i].patron_id
+					td=loans[i].loaned_on
+					td=loans[i].return_by
+					td=loans[i].returned_on
+			-}

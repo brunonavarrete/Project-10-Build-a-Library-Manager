@@ -1,0 +1,24 @@
+extends layout.pug
+block content
+	h1 Patrons
+	p
+		a(class='button' href='/patrons/new') Add new patron
+	table
+		thead
+			tr
+				th First Name
+				th Last Name
+				th Address
+				th Email
+				th Library Id
+				th Zip code
+		tbody
+			-for( var i = 0; i < patrons.length; i++){
+				tr
+					td=patrons[i].first_name
+					td=patrons[i].last_name
+					td=patrons[i].address
+					td=patrons[i].email
+					td=patrons[i].library_id
+					td=patrons[i].zip_code
+			-}

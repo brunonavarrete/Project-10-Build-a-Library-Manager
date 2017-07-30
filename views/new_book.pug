@@ -1,0 +1,25 @@
+extends layout.pug
+block content
+	h1 New Book
+	form(method='post' action='/books/new')
+		-if(errors){
+			h2(class="error") Oooops!
+			ul(class="error")
+				-for( let i = 0; i < errors.length; i++ ){
+					li=errors[i].message
+				-}
+		-}
+		p
+			label(for='title') Title
+			input(id='title' name='title' type='text')
+		p
+			label(for='author') Author
+			input(id='author' name='author' type='text')
+		p
+			label(for='genre') Genre
+			input(id='genre' name='genre' type='text')
+		p
+			label(for='first_published') First Published
+			input(id='first_published' name='first_published' type='text')
+		p
+			input(type='submit' value='Create new book')

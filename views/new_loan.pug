@@ -1,0 +1,24 @@
+extends layout.pug
+block content
+	h1 New Loan
+	form
+		p
+			label(for='book_id') Book
+			select(id='book_id')
+				-for( var i =  0; i < books.length; i++){
+					option(value="book_id")=books[i].title
+				-}
+		p
+			label(for='patron_id') Patron
+			select(id='patron_id')
+				-for( var i =  0; i < patrons.length; i++){
+					option(value="patron_id")=`${patrons[i].first_name} ${patrons[i].last_name}`
+				-}
+		p
+			label(for='loaned_on') Loaned on:
+			input(id='loaned_on' type='text' value='Sun May 22 2016 17:00:00 GMT-0700 (PDT)')
+		p
+			label(for='return_by') Return by:
+			input(id='return_by' type='text' value='Sun May 22 2016 17:00:00 GMT-0700 (PDT)')
+		p
+			input(type='submit' value='Create new loan')

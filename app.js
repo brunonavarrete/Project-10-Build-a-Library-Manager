@@ -30,7 +30,7 @@ const app = express();
 		res.locals.err = err;
 		res.status(err.status);
 		//res.render('error',err);
-		res.send(err.status);
+		res.send(err);
 	});
 
 //server
