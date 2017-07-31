@@ -4,7 +4,6 @@ const app = express();
 
 // middleware
 	app.use( bodyParser.urlencoded({extended:false}) );
-	app.use( cookieParser() );
 	app.use('/static', express.static(__dirname + '/public'));
 
 // view engine setup
