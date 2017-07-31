@@ -1,7 +1,14 @@
 extends ../layout.pug
 block content
 	h1 New Patron
-	form
+	form(action='/patrons/new' method='post')
+		-if(errors){
+			h2(class="error") Oooops!
+			ul(class="error")
+				-for( let i = 0; i < errors.length; i++ ){
+					li=errors[i].message
+				-}
+		-}
 		p
 			label(for='first_name') First Name
 			input(id='first_name' name='first_name' type='text')

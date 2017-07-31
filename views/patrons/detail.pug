@@ -1,7 +1,14 @@
 extends ../layout.pug
 block content
 	h1=`Patron: ${patron.first_name} ${patron.last_name}`
-	form
+	form(action=`/patrons/${patron.id}` method='post')
+		-if(errors){
+			h2(class="error") Oooops!
+			ul(class="error")
+				-for( let i = 0; i < errors.length; i++ ){
+					li=errors[i].message
+				-}
+		-}
 		p
 			label(for='first_name') First Name
 			input(id='first_name' name='first_name' value=`${patron.first_name}` type='text')
@@ -22,3 +29,27 @@ block content
 			input(id='zip_code' name='zip_code' value=`${patron.zip_code}` type='text')
 		p
 			input(type='submit' value='Update')
+	table
+		thead
+			tr
+				th Book
+				th Patron 
+				th Loaned on
+				th Return by 
+				th Returned on
+				th Action
+		tbody
+			-for( let i = 0; i < patron.Loans.length; i++ ){
+				tr
+					td
+						a(href=`/books/${patron.Loans[i].book_id}`)=`${patron.Loans[i].Book.title}`
+					td
+						a(href=`/patrons/${patron.id}`)=`${patron.first_name} ${patron.last_name}`
+					td #{patron.Loans[i].loaned_on}
+					td #{patron.Loans[i].return_by}
+					td #{patron.Loans[i].returned_on}
+					td
+						-if( !patron.Loans[i].returned_on ){
+							a(href=`/loans/${patron.Loans[i].id}` class="button") Return Book
+						-}
+			-}
