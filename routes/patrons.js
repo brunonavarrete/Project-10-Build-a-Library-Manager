@@ -6,6 +6,7 @@ const Loan = require('../models').Loan;
 
 // location
 	Patron.hasMany(Loan);
+
 	Loan.belongsTo(Book);
 
 // GET
@@ -56,14 +57,21 @@ const Loan = require('../models').Loan;
 		Patron.findById(req.params.id).then((patron) => {
 			return patron.update(req.body);
 		}).then((patron) => {
-			res.render('patrons/detail',{patron});
+			res.redirect(`/patrons/${patron.id}`);
 		}).catch((error) => {
 			if( error.name === 'SequelizeValidationError' ){
 				Patron.findOne({
 					where: { 
 						id: req.params.id
-					}
+					},
+					include: [
+						{
+							model: Loan,
+							include: [Book]
+						}
+					]
 				}).then((patron) => {
+					res.locals.errors = error.errors;
 					res.render('patrons/detail',{patron,errors:error.errors});
 				});
 			} else {

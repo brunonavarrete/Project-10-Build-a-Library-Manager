@@ -6,7 +6,8 @@ const Loan = require('../models').Loan;
 
 const formatDate = function(date,tomorrow){
 	const month = (date.getMonth()+1 < 10) ? '0'+(date.getMonth()+1) : date.getMonth()+1;
-	const day = (tomorrow) ? (date.getDate()+1) : date.getDate();
+	let day = (tomorrow) ? (date.getDate()+1) : date.getDate();
+	day = (day < 10) ? '0'+(day) : day;
 	return date.getFullYear() + '-' + month + '-' + day;
 }
 
@@ -30,8 +31,10 @@ const formatDate = function(date,tomorrow){
 	router.get('/new', (req, res) => {
 		Book.findAll().then( (books) => {
 			Patron.findAll().then( (patrons) => {
-				res.locals.today = formatDate( new Date(),undefined );
-				res.locals.tomorrow = formatDate( new Date(),true );
+				const today = new Date();
+				const tomorrow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+				res.locals.today = formatDate( today, undefined );
+				res.locals.tomorrow = formatDate( tomorrow, true );
 				res.render('loans/new',{books,patrons});
 			});
 		});
@@ -72,7 +75,6 @@ const formatDate = function(date,tomorrow){
 		}).then((loan => {
 			res.locals.today = formatDate( new Date(),undefined );
 			res.render('loans/return',{loan});
-			//res.send(loan);
 		}));
 	});
 
@@ -84,8 +86,10 @@ const formatDate = function(date,tomorrow){
 			if( error.name === 'SequelizeValidationError' ){
 				Book.findAll().then( (books) => {
 					Patron.findAll().then( (patrons) => {
-						res.locals.today = formatDate( new Date(),undefined );
-						res.locals.tomorrow = formatDate( new Date(),true );
+						const today = new Date();
+						const tomorrow = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+						res.locals.today = formatDate( today, undefined );
+						res.locals.tomorrow = formatDate( tomorrow, true );
 						res.locals.errors = error.errors;
 						res.render('loans/new',{books,patrons});
 					});
@@ -112,7 +116,6 @@ const formatDate = function(date,tomorrow){
 					res.locals.today = formatDate( new Date(),undefined );
 					res.locals.errors = error.errors;
 					res.render('loans/return',{loan});
-					//res.send(loan);
 				}));
 			} else {
 				console.error(error);

@@ -82,7 +82,7 @@ const Loan = require('../models').Loan;
 		Book.findById(req.params.id).then((book) => {
 			return book.update(req.body);
 		}).then((book) => {
-			res.redirect(`/books/${book.id}`);
+			res.redirect('/books');
 		}).catch((error) => {
 			if( error.name === 'SequelizeValidationError' ){
 				Book.findOne({
